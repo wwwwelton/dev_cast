@@ -145,9 +145,9 @@ def get_destination(stream_key, id):
                 400,
             )
 
-        destination = [
-            dest for dest in stream.destinations if dest.id == int(id)
-        ]
+        destination = next(
+            (dest for dest in stream.destinations if dest.id == int(id)), None
+        )
 
         if not destination:
             return (
@@ -164,7 +164,7 @@ def get_destination(stream_key, id):
             jsonify(
                 {
                     "message": "Success",
-                    "destination": ast.literal_eval(str(destination[0])),
+                    "destination": ast.literal_eval(str(destination)),
                 }
             ),
             200,
