@@ -1,3 +1,5 @@
+import uuid
+
 from app import create_app, db
 from models.models import Destination, Stream
 
@@ -10,9 +12,9 @@ def populate_database():
             print("Database already populated.")
             return
 
-        stream1 = Stream(hash_url="a1b2c3d", stream_name="Customer 1")
-        stream2 = Stream(hash_url="f7g8h9i", stream_name="Customer 2")
-        stream3 = Stream(hash_url="z9y8x7w", stream_name="Customer 3")
+        stream1 = Stream(stream_name="Customer 1")
+        stream2 = Stream(stream_name="Customer 2")
+        stream3 = Stream(stream_name="Customer 3")
 
         db.session.add_all([stream1, stream2, stream3])
         db.session.commit()
@@ -20,22 +22,40 @@ def populate_database():
         # Create sample Destination entries
         destinations = [
             Destination(
-                stream_id=1, pid=20, dest_url="DEST 1 URL", status="ON"
+                stream_id=1,
+                pid=20,
+                dest_url="rtmp://facebook/static/" + str(uuid.uuid4().hex),
+                live="ON",
             ),
             Destination(
-                stream_id=1, pid=-1, dest_url="DEST 2 URL", status="OFF"
+                stream_id=1,
+                pid=-1,
+                dest_url="rtmp://youtube/static/" + str(uuid.uuid4().hex),
+                live="OFF",
             ),
             Destination(
-                stream_id=1, pid=-1, dest_url="DEST 3 URL", status="OFF"
+                stream_id=1,
+                pid=-1,
+                dest_url="rtmp://instagram/static/" + str(uuid.uuid4().hex),
+                live="OFF",
             ),
             Destination(
-                stream_id=2, pid=58, dest_url="DEST 1 URL", status="ON"
+                stream_id=2,
+                dest_url="rtmp://facebook/static/" + str(uuid.uuid4().hex),
+                pid=58,
+                live="ON",
             ),
             Destination(
-                stream_id=2, pid=33, dest_url="DEST 2 URL", status="ON"
+                stream_id=2,
+                pid=33,
+                dest_url="rtmp://youtube/static/" + str(uuid.uuid4().hex),
+                live="ON",
             ),
             Destination(
-                stream_id=2, pid=24, dest_url="DEST 3 URL", status="ON"
+                stream_id=2,
+                pid=24,
+                dest_url="rtmp://instagram/static/" + str(uuid.uuid4().hex),
+                live="ON",
             ),
         ]
 

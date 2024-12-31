@@ -1,12 +1,23 @@
+import uuid
+
 from app import db
 
 
 class Stream(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    hash_url = db.Column(db.String(255), unique=True, nullable=False)
+    unique_url = db.Column(
+        db.String(255),
+        unique=True,
+        nullable=False,
+        default=lambda: str(uuid.uuid4().hex),
+    )
     stream_name = db.Column(db.String(255), nullable=False)
+    live = db.Column(db.String(10), nullable=False, default="OFF")
 
     destinations = db.relationship("Destination", backref="stream", lazy=True)
+
+    def __init__(self, stream_name):
+        self.stream_name = stream_name
 
     def __repr__(self):
         return f"<Stream {self.stream_name}>"
@@ -19,7 +30,7 @@ class Destination(db.Model):
     )
     pid = db.Column(db.Integer, nullable=False)
     dest_url = db.Column(db.String(255), nullable=False)
-    status = db.Column(db.String(10), nullable=False)
+    live = db.Column(db.String(10), nullable=False)
 
     def __repr__(self):
         return f"<Destination {self.dest_url}>"
