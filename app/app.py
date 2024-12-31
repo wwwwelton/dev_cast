@@ -118,6 +118,34 @@ def get_streams():
     )
 
 
+@app_bp.route("/streams/<stream_name>", methods=["DELETE"])
+def delete_stream(stream_name):
+    try:
+        stream = Stream.query.filter_by(stream_name=stream_name).first()
+
+        if not stream:
+            return (
+                jsonify({"message": "The 'stream' does not exist"}),
+                400,
+            )
+
+        db.session.delete(stream)
+        db.session.commit()
+
+        return (
+            jsonify(
+                {
+                    "message": "Stream deleted successfully!",
+                    "stream": {"stream_name": stream_name},
+                }
+            ),
+            200,
+        )
+
+    except Exception:
+        return (jsonify({"message": "An internal server error occurred"}), 500)
+
+
 @app_bp.route("/", methods=["GET"])
 def start_restream_route():
     threading.Thread(target=start_restream).start()
