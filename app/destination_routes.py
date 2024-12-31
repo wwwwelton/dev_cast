@@ -27,7 +27,10 @@ def create_destination_route():
             return (
                 jsonify(
                     {
-                        "message": "The 'stream_key', 'dest_name' and 'dest_url' fields are required"
+                        "message": (
+                            "The 'stream_key', 'dest_name' and 'dest_url' "
+                            "fields are required"
+                        )
                     }
                 ),
                 400,
@@ -84,9 +87,18 @@ def get_destinations(stream_key):
 
         if not stream:
             return (
-                jsonify({"message": "The 'stream_key' does not exist"}),
+                jsonify(
+                    {
+                        "message": "The 'stream_key' does not exist",
+                        "destination": {},
+                    }
+                ),
                 400,
             )
+
+        if "id" in request.args:
+            id = request.args.get("id")
+            return get_destination(stream_key=stream_key, id=id)
 
         destinations = stream.destinations
 
@@ -110,5 +122,52 @@ def get_destinations(stream_key):
             ),
             200,
         )
-    except Exception:
+    except Exception as e:
+        print(e)
+        return (jsonify({"message": "An internal server error occurred"}), 500)
+
+
+# @destination_bp.route("/destinations/<stream_key>/<id>", methods=["GET"])
+def get_destination(stream_key, id):
+    try:
+        stream = Stream.query.filter_by(stream_key=stream_key).first()
+
+        if not stream:
+            return (
+                jsonify(
+                    {
+                        "message": "The 'stream_key' does not exist",
+                        "destination": {},
+                    }
+                ),
+                400,
+            )
+
+        destination = [
+            dest for dest in stream.destinations if dest.id == int(id)
+        ]
+
+        if not destination:
+            return (
+                jsonify(
+                    {
+                        "message": "The 'id' does not exist",
+                        "destination": {},
+                    }
+                ),
+                200,
+            )
+        print(type(destination[0]))
+
+        return (
+            jsonify(
+                {
+                    "message": "Success",
+                    "destination": ast.literal_eval(str(destination[0])),
+                }
+            ),
+            200,
+        )
+    except Exception as e:
+        print(e)
         return (jsonify({"message": "An internal server error occurred"}), 500)

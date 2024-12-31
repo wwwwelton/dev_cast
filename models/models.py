@@ -49,6 +49,7 @@ class Destination(db.Model):
     def __repr__(self):
         return str(
             {
+                "id": self.id,
                 "dest_name": self.dest_name,
                 "dest_url": self.dest_url,
                 "live": self.live,
