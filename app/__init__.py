@@ -17,7 +17,7 @@ def create_app():
     )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-    # Initialize extensions
+    # Initialize extensions for Flask
     db.init_app(app)
 
     # Import and register blueprints(allows you to register the routes later)
@@ -25,7 +25,7 @@ def create_app():
 
     app.register_blueprint(app_bp)
 
-    # Register models
+    # Register models and create the datababase file
     with app.app_context():
         db.create_all()
 
