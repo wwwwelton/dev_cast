@@ -9,7 +9,7 @@ destination_bp = Blueprint("destination", __name__)
 
 
 @destination_bp.route("/destinations", methods=["POST"])
-def create_destination_route():
+def create_destination():
     try:
         data = request.get_json()
 

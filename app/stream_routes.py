@@ -9,7 +9,7 @@ stream_bp = Blueprint("stream", __name__)
 
 
 @stream_bp.route("/streams", methods=["POST"])
-def create_stream_route():
+def create_stream():
     try:
         data = request.get_json()
 
