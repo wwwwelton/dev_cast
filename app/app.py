@@ -1,3 +1,4 @@
+import ast
 import os
 import threading
 
@@ -89,6 +90,32 @@ def create_stream_route():
 
     except Exception:
         return (jsonify({"message": "An internal server error occurred"}), 500)
+
+
+@app_bp.route("/streams", methods=["GET"])
+def get_streams():
+    streams = Stream.query.all()
+
+    if not streams:
+        return (
+            jsonify(
+                {
+                    "message": "No streams available",
+                    "streams": {},
+                }
+            ),
+            200,
+        )
+
+    return (
+        jsonify(
+            {
+                "message": "Success",
+                "streams": {"streams": ast.literal_eval(str(streams))},
+            }
+        ),
+        200,
+    )
 
 
 @app_bp.route("/", methods=["GET"])

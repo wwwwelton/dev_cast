@@ -20,7 +20,19 @@ class Stream(db.Model):
         self.stream_name = stream_name
 
     def __repr__(self):
-        return f"<Stream {self.stream_name}>"
+        return str(
+            {
+                "stream_name": self.stream_name,
+                "live": self.live,
+                "destinations": [
+                    {
+                        "dest_url": destination.dest_url,
+                        "live": destination.live,
+                    }
+                    for destination in self.destinations
+                ],
+            }
+        )
 
 
 class Destination(db.Model):
