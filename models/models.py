@@ -41,9 +41,16 @@ class Destination(db.Model):
     stream_id = db.Column(
         db.Integer, db.ForeignKey("stream.id"), nullable=False
     )
-    pid = db.Column(db.Integer, nullable=False)
+    pid = db.Column(db.Integer, nullable=False, default=-1)
+    dest_name = db.Column(db.String(255), nullable=False)
     dest_url = db.Column(db.String(255), nullable=False)
-    live = db.Column(db.String(10), nullable=False)
+    live = db.Column(db.String(10), nullable=False, default="OFF")
 
     def __repr__(self):
-        return f"<Destination {self.dest_url}>"
+        return str(
+            {
+                "dest_name": self.dest_name,
+                "dest_url": self.dest_url,
+                "live": self.live,
+            }
+        )
