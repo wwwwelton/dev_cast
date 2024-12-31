@@ -1,3 +1,5 @@
+import ast
+
 from flask import Blueprint, jsonify, request
 
 from app import db
@@ -71,5 +73,42 @@ def create_destination_route():
             201,
         )
 
+    except Exception:
+        return (jsonify({"message": "An internal server error occurred"}), 500)
+
+
+@destination_bp.route("/destinations/<stream_key>", methods=["GET"])
+def get_destinations(stream_key):
+    try:
+        stream = Stream.query.filter_by(stream_key=stream_key).first()
+
+        if not stream:
+            return (
+                jsonify({"message": "The 'stream_key' does not exist"}),
+                400,
+            )
+
+        destinations = stream.destinations
+
+        if not destinations:
+            return (
+                jsonify(
+                    {
+                        "message": "No destinations available",
+                        "destinations": {},
+                    }
+                ),
+                200,
+            )
+
+        return (
+            jsonify(
+                {
+                    "message": "Success",
+                    "destinations": ast.literal_eval(str(destinations)),
+                }
+            ),
+            200,
+        )
     except Exception:
         return (jsonify({"message": "An internal server error occurred"}), 500)
