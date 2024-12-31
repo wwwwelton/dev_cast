@@ -27,7 +27,9 @@ def create_stream_route():
                 400,
             )
 
-        if Stream.query.filter_by(stream_name=stream_name).first():
+        result = Stream.query.filter_by(stream_name=stream_name).first()
+
+        if result:
             return (
                 jsonify({"message": "The 'stream_name' already exists"}),
                 400,
