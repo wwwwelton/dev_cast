@@ -22,10 +22,12 @@ def create_app():
 
     # Import and register blueprints(allows you to register the routes later)
     from app.app import app_bp
+    from app.destination_routes import destination_bp
     from app.stream_routes import stream_bp
 
     app.register_blueprint(app_bp)
     app.register_blueprint(stream_bp)
+    app.register_blueprint(destination_bp)
 
     # Register models and create the datababase file
     with app.app_context():
