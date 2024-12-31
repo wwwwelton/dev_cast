@@ -1,3 +1,4 @@
+import ast
 import uuid
 
 from app import db
@@ -14,7 +15,12 @@ class Stream(db.Model):
     stream_name = db.Column(db.String(255), nullable=False)
     live = db.Column(db.String(10), nullable=False, default="OFF")
 
-    destinations = db.relationship("Destination", backref="stream", lazy=True)
+    destinations = db.relationship(
+        "Destination",
+        backref="stream",
+        lazy=True,
+        cascade="all, delete-orphan"
+    )
 
     def __init__(self, stream_name):
         self.stream_name = stream_name
@@ -25,13 +31,7 @@ class Stream(db.Model):
                 "stream_name": self.stream_name,
                 "stream_key": self.stream_key,
                 "live": self.live,
-                "destinations": [
-                    {
-                        "dest_url": destination.dest_url,
-                        "live": destination.live,
-                    }
-                    for destination in self.destinations
-                ],
+                "destinations": ast.literal_eval(str(self.destinations)),
             }
         )
 
