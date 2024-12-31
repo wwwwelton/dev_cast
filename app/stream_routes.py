@@ -76,7 +76,7 @@ def get_streams():
         jsonify(
             {
                 "message": "Success",
-                "streams": {"streams": ast.literal_eval(str(streams))},
+                "streams": ast.literal_eval(str(streams)),
             }
         ),
         200,

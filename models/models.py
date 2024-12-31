@@ -50,6 +50,7 @@ class Destination(db.Model):
         return str(
             {
                 "id": self.id,
+                "pid": self.pid,
                 "dest_name": self.dest_name,
                 "dest_url": self.dest_url,
                 "live": self.live,
