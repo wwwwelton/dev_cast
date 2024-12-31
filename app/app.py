@@ -1,3 +1,4 @@
+import os
 import threading
 
 import ffmpeg
@@ -8,8 +9,8 @@ from models.models import Destination, Stream
 app_bp = Blueprint("app", __name__)
 
 # RTMP URL
-INPUT_RTMP_URL = "rtmp://br-3.castr.io/static/e5618ed0b13111e8884621131f49d832"
-OUTPUT_RTMP_URL = "rtmp://br.castr.io/static/483078d0f62111e8b02a31cc5fe3aca7"
+INPUT_RTMP_URL = os.getenv("INPUT_RTMP_URL")
+OUTPUT_RTMP_URL = os.getenv("OUTPUT_RTMP_URL")
 
 
 def start_restream():
