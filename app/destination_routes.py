@@ -122,8 +122,7 @@ def get_destinations(stream_key):
             ),
             200,
         )
-    except Exception as e:
-        print(e)
+    except Exception:
         return (jsonify({"message": "An internal server error occurred"}), 500)
 
 
@@ -157,7 +156,6 @@ def get_destination(stream_key, id):
                 ),
                 200,
             )
-        print(type(destination[0]))
 
         return (
             jsonify(
@@ -168,6 +166,5 @@ def get_destination(stream_key, id):
             ),
             200,
         )
-    except Exception as e:
-        print(e)
+    except Exception:
         return (jsonify({"message": "An internal server error occurred"}), 500)
