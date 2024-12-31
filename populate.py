@@ -24,23 +24,27 @@ def populate_database():
             Destination(
                 stream_id=1,
                 pid=20,
+                dest_name="Facebook",
                 dest_url="rtmp://facebook/static/" + str(uuid.uuid4().hex),
                 live="ON",
             ),
             Destination(
                 stream_id=1,
                 pid=-1,
+                dest_name="Youtube",
                 dest_url="rtmp://youtube/static/" + str(uuid.uuid4().hex),
                 live="OFF",
             ),
             Destination(
                 stream_id=1,
                 pid=-1,
+                dest_name="Instagram",
                 dest_url="rtmp://instagram/static/" + str(uuid.uuid4().hex),
                 live="OFF",
             ),
             Destination(
                 stream_id=2,
+                dest_name="Facebook",
                 dest_url="rtmp://facebook/static/" + str(uuid.uuid4().hex),
                 pid=58,
                 live="ON",
@@ -48,12 +52,14 @@ def populate_database():
             Destination(
                 stream_id=2,
                 pid=33,
+                dest_name="Youtube",
                 dest_url="rtmp://youtube/static/" + str(uuid.uuid4().hex),
                 live="ON",
             ),
             Destination(
                 stream_id=2,
                 pid=24,
+                dest_name="Instagram",
                 dest_url="rtmp://instagram/static/" + str(uuid.uuid4().hex),
                 live="ON",
             ),
