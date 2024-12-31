@@ -44,7 +44,7 @@ def create_stream_route():
                     "message": "Stream added successfully!",
                     "stream": {
                         "stream_name": new_stream.stream_name,
-                        "streaming_key": new_stream.unique_url,
+                        "stream_key": new_stream.stream_key,
                     },
                 }
             ),
@@ -81,10 +81,10 @@ def get_streams():
     )
 
 
-@stream_bp.route("/streams/<stream_name>", methods=["DELETE"])
-def delete_stream(stream_name):
+@stream_bp.route("/streams/<stream_key>", methods=["DELETE"])
+def delete_stream(stream_key):
     try:
-        stream = Stream.query.filter_by(stream_name=stream_name).first()
+        stream = Stream.query.filter_by(stream_key=stream_key).first()
 
         if not stream:
             return (
@@ -99,7 +99,10 @@ def delete_stream(stream_name):
             jsonify(
                 {
                     "message": "Stream deleted successfully!",
-                    "stream": {"stream_name": stream_name},
+                    "stream": {
+                        "stream_name": stream.stream_name,
+                        "stream_key": stream_key,
+                    },
                 }
             ),
             200,

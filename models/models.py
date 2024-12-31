@@ -5,7 +5,7 @@ from app import db
 
 class Stream(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    unique_url = db.Column(
+    stream_key = db.Column(
         db.String(255),
         unique=True,
         nullable=False,
@@ -23,6 +23,7 @@ class Stream(db.Model):
         return str(
             {
                 "stream_name": self.stream_name,
+                "stream_key": self.stream_key,
                 "live": self.live,
                 "destinations": [
                     {
