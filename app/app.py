@@ -28,23 +28,6 @@ def start_restream():
         print(f"An error occurred: {e}")
 
 
-@app_bp.route("/db", methods=["GET"])
-def get_db():
-    streams = Stream.query.all()
-    stream1_destinations = Destination.query.filter_by(stream_id=1).all()
-
-    return (
-        jsonify(
-            {
-                "message": "DB successfully.",
-                "stream1_destinations": str(streams),
-                "destinations": str(stream1_destinations),
-            }
-        ),
-        200,
-    )
-
-
 @app_bp.route("/streams", methods=["POST"])
 def create_stream_route():
     try:
