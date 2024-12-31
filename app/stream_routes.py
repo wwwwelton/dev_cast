@@ -90,7 +90,7 @@ def delete_stream(stream_key):
 
         if not stream:
             return (
-                jsonify({"message": "The 'stream' does not exist"}),
+                jsonify({"message": "The 'stream_key' does not exist"}),
                 400,
             )
 
