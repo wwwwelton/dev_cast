@@ -23,3 +23,13 @@ def read_items(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
 @router.post("/items/", response_model=schemas.Item)
 def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
     return crud.create_item(db, item)
+
+
+@router.get("/streams", response_model=list[schemas.Stream])
+def read_streams(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    return crud.get_streams(db, skip=skip, limit=limit)
+
+
+@router.post("/streams", response_model=schemas.Stream)
+def create_stream(stream: schemas.StreamCreate, db: Session = Depends(get_db)):
+    return crud.create_stream(db, stream)

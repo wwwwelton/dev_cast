@@ -16,3 +16,20 @@ class Item(ItemBase):
 
     class Config:
         from_attributes = True
+
+
+class StreamBase(BaseModel):
+    stream_name: str
+
+
+class StreamCreate(StreamBase):
+    pass
+
+
+class Stream(StreamBase):
+    id: int
+    stream_key: str
+    live: bool
+
+    class Config:
+        from_attributes = True
