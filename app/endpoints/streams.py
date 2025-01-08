@@ -51,3 +51,11 @@ def update_stream(
         return crud.update_stream(db, stream_key, stream_data)
     except Exception as e:
         raise HTTPException(status_code=404, detail=str(e))
+
+
+@router.delete("/streams/{stream_key}", response_model=schemas.Stream)
+def delete_stream(stream_key: str, db: Session = Depends(get_db)):
+    try:
+        return crud.delete_stream(db, stream_key)
+    except Exception as e:
+        raise HTTPException(status_code=404, detail=str(e))

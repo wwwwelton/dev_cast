@@ -48,3 +48,10 @@ def update_stream(db: Session, stream_key: str, stream_data: StreamUpdate):
     db.commit()
     db.refresh(db_stream)
     return db_stream
+
+
+def delete_stream(db: Session, stream_key: str):
+    db_stream = get_stream(db, stream_key)
+    db.delete(db_stream)
+    db.commit()
+    return db_stream
