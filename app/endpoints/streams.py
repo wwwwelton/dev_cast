@@ -15,16 +15,6 @@ def get_db():
         db.close()
 
 
-@router.get("/items/", response_model=list[schemas.Item])
-def read_items(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    return crud.get_items(db, skip=skip, limit=limit)
-
-
-@router.post("/items/", response_model=schemas.Item)
-def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
-    return crud.create_item(db, item)
-
-
 @router.get("/streams/{stream_key}", response_model=schemas.Stream)
 def get_stream(stream_key: str, db: Session = Depends(get_db)):
     try:

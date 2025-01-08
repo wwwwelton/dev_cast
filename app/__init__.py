@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from app.database import Base, engine
-from app.endpoints import items, streams
+from app.endpoints import streams
 
 
 def create_app():
@@ -10,8 +10,7 @@ def create_app():
 
     app = FastAPI()
 
-    # Include item routes
-    app.include_router(items.router)
+    # Include routes
     app.include_router(streams.router)
 
     return app
