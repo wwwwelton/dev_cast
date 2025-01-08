@@ -1,4 +1,30 @@
+from typing import List
+
 from pydantic import BaseModel
+
+
+class DestinationBase(BaseModel):
+    stream_key: str
+    dest_name: str
+    dest_url: str
+
+
+class DestinationCreate(DestinationBase):
+    pass
+
+
+class DestinationUpdate(BaseModel):
+    pass
+
+
+class Destination(DestinationBase):
+    id: int
+    stream_id: int
+    pid: int
+    live: bool
+
+    class Config:
+        from_attributes = True
 
 
 class StreamBase(BaseModel):
@@ -17,6 +43,7 @@ class Stream(StreamBase):
     id: int
     stream_key: str
     live: bool
+    destinations: List[Destination] = []
 
     class Config:
         from_attributes = True
