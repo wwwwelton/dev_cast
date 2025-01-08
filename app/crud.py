@@ -20,7 +20,10 @@ def create_item(db: Session, item: ItemCreate):
 
 
 def get_stream(db: Session, stream_key: str):
-    return db.query(Stream).filter(Stream.stream_key == stream_key).first()
+    db_stream = db.query(Stream).filter(Stream.stream_key == stream_key).first()
+    if not db_stream:
+        raise NoResultFound(f"Stream with stream_key {stream_key} not found")
+    return db_stream
 
 
 def get_streams(db: Session, skip: int = 0, limit: int = 10):
@@ -41,8 +44,6 @@ def create_stream(db: Session, stream: StreamCreate):
 
 def update_stream(db: Session, stream_key: str, stream_data: StreamUpdate):
     db_stream = get_stream(db, stream_key)
-    if not db_stream:
-        raise NoResultFound(f"Stream with stream_key {stream_key} not found")
     db_stream.live = stream_data.live
     db.commit()
     db.refresh(db_stream)
