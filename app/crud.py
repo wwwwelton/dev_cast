@@ -52,7 +52,9 @@ def create_destination(
 ):
     db_stream = get_stream(db, destination.stream_key)
     if not db_stream:
-        raise NoResultFound(f"Stream with stream_key {stream_key} not found")
+        raise NoResultFound(
+            f"Stream with stream_key {destination.stream_key} not found"
+        )
     db_dest = Destination(
         stream_id=db_stream.id,
         stream_key=db_stream.stream_key,
