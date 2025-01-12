@@ -22,7 +22,7 @@ class Destination(Base):
     stream_id = Column(Integer, ForeignKey("stream.id"))
     stream_key = Column(String(36), index=True)
     pid = Column(Integer, default=-1)
-    dest_name = Column(String, unique=True, index=True)
+    dest_name = Column(String, index=True)
     dest_url = Column(String)
     live = Column(Boolean, default=False)
 
