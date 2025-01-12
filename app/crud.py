@@ -8,10 +8,7 @@ from app.schemas import DestinationCreate, StreamCreate, StreamUpdate
 
 
 def get_stream(db: Session, stream_key: str):
-    db_stream = db.query(Stream).filter(Stream.stream_key == stream_key).first()
-    if not db_stream:
-        raise NoResultFound(f"Stream with stream_key {stream_key} not found")
-    return db_stream
+    return db.query(Stream).filter(Stream.stream_key == stream_key).first()
 
 
 def get_streams(db: Session, skip: int = 0, limit: int = 10):
@@ -32,6 +29,8 @@ def create_stream(db: Session, stream: StreamCreate):
 
 def update_stream(db: Session, stream_key: str, stream_data: StreamUpdate):
     db_stream = get_stream(db, stream_key)
+    if not db_stream:
+        raise NoResultFound(f"Stream with stream_key {stream_key} not found")
     db_stream.live = stream_data.live
     db.commit()
     db.refresh(db_stream)
@@ -40,6 +39,8 @@ def update_stream(db: Session, stream_key: str, stream_data: StreamUpdate):
 
 def delete_stream(db: Session, stream_key: str):
     db_stream = get_stream(db, stream_key)
+    if not db_stream:
+        raise NoResultFound(f"Stream with stream_key {stream_key} not found")
     db.delete(db_stream)
     db.commit()
     return db_stream
@@ -50,6 +51,8 @@ def create_destination(
     destination: DestinationCreate,
 ):
     db_stream = get_stream(db, destination.stream_key)
+    if not db_stream:
+        raise NoResultFound(f"Stream with stream_key {stream_key} not found")
     db_dest = Destination(
         stream_id=db_stream.id,
         stream_key=db_stream.stream_key,
