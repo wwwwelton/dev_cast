@@ -1,19 +1,11 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from app.database import SessionLocal
+from app.endpoints import get_db
 from app.schemas import destination_schema
 from app.services import destination_service
 
 router = APIRouter()
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 @router.post("/destinations/", response_model=destination_schema.Destination)
