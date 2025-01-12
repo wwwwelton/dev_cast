@@ -3,7 +3,8 @@ import uuid
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import Session
 
-from app.models import Destination, Stream
+from app.models.destination_model import Destination
+from app.models.stream_model import Stream
 from app.schemas import DestinationCreate, StreamCreate, StreamUpdate
 
 
